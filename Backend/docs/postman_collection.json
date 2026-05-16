@@ -1,0 +1,126 @@
+{
+  "info": {
+    "name": "InterLink Estudiantil API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" },
+    { "key": "carreraId", "value": "" },
+    { "key": "proyectoId", "value": "" },
+    { "key": "postulacionId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/auth/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Victor Ferrer\",\n  \"correo\": \"victor@universidad.mx\",\n  \"contrasena\": \"123456\",\n  \"carrera\": \"{{carreraId}}\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"correo\": \"victor@universidad.mx\",\n  \"contrasena\": \"123456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Carreras - Listar",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/carreras"
+      }
+    },
+    {
+      "name": "Usuarios - Perfil",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/usuarios/perfil"
+      }
+    },
+    {
+      "name": "Proyectos - Listar con filtros y paginación",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/proyectos?page=1&limit=10&buscar=app"
+      }
+    },
+    {
+      "name": "Proyectos - Crear",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/proyectos",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"App para cafetería\",\n  \"descripcion\": \"Sistema sencillo para controlar productos, ventas y reportes de una cafetería escolar.\",\n  \"carreras\": [\"{{carreraId}}\"],\n  \"cupoMaximo\": 3\n}"
+        }
+      }
+    },
+    {
+      "name": "Proyectos - Detalle",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/proyectos/{{proyectoId}}"
+      }
+    },
+    {
+      "name": "Postulaciones - Postularme",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/proyectos/{{proyectoId}}/postulaciones"
+      }
+    },
+    {
+      "name": "Postulaciones - Aceptar/Rechazar",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/proyectos/{{proyectoId}}/postulaciones/{{postulacionId}}",
+        "body": { "mode": "raw", "raw": "{\n  \"estado\": \"Aceptada\"\n}" }
+      }
+    },
+    {
+      "name": "Mensajes - Listar",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/proyectos/{{proyectoId}}/mensajes"
+      }
+    },
+    {
+      "name": "Mensajes - Enviar",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/proyectos/{{proyectoId}}/mensajes",
+        "body": { "mode": "raw", "raw": "{\n  \"contenido\": \"Hola, me interesa apoyar en el proyecto.\"\n}" }
+      }
+    }
+  ]
+}
