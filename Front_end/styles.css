@@ -1,0 +1,33 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: #f5f7fb; color: #1f2937; }
+.topbar { background: linear-gradient(135deg, #0d6efd, #4f8cff); color: white; padding: 24px 7%; display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; }
+.topbar h1 { margin: 0 0 6px; }
+.topbar p { margin: 0; opacity: .95; }
+nav button { margin-left: 8px; background: white; color: #0d6efd; border: none; }
+.container { width: min(1200px, 92%); margin: 28px auto; }
+.grid { display: grid; gap: 20px; }
+.two-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.card { background: white; border-radius: 16px; padding: 22px; box-shadow: 0 8px 24px rgba(0,0,0,.07); margin-bottom: 20px; }
+h2 { margin-top: 0; }
+label { display: block; margin-top: 12px; font-weight: 600; }
+input, select, textarea { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; margin-top: 6px; font-size: 15px; }
+select[multiple] { min-height: 110px; }
+button { margin-top: 16px; padding: 12px 18px; border-radius: 10px; border: none; background: #0d6efd; color: white; cursor: pointer; font-weight: 700; }
+button:hover { opacity: .9; }
+button.outline { background: white; color: #0d6efd; border: 1px solid #0d6efd; }
+button.danger { background: #dc3545; }
+button.small { padding: 8px 12px; margin: 0 4px; }
+.mensaje { padding: 14px 18px; border-radius: 12px; margin-bottom: 18px; background: #e8f1ff; border: 1px solid #b7d3ff; }
+.mensaje.error { background: #ffe8e8; border-color: #ffb8b8; }
+.oculto { display: none !important; }
+.perfil-card { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.proyectos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.proyecto { border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; background: #fafafa; }
+.proyecto h3 { margin-top: 0; }
+.badge { display: inline-block; padding: 5px 9px; border-radius: 999px; background: #e8f1ff; color: #0d6efd; font-size: 13px; margin: 3px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.actions button { margin-top: 8px; }
+footer { text-align: center; color: #6b7280; padding: 24px; }
+pre { white-space: pre-wrap; background: #111827; color: white; padding: 12px; border-radius: 10px; overflow: auto; }
+@media (max-width: 800px) { .two-cols, .proyectos { grid-template-columns: 1fr; } }
