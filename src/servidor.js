@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser'); 
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const connectDB = require('./configuracion/base-datos');
@@ -16,8 +17,13 @@ const errorHandler = require('./middlewares/manejadorErrores');
 const app = express();
 connectDB();
 
-app.use(cors());
+app.use(cors({
+  origin: true, 
+  credentials: true 
+}));
+
 app.use(express.json());
+app.use(cookieParser()); 
 
 app.get('/', (req, res) => {
   res.json({ success: true, message: 'API InterLink Estudiantil funcionando' });
