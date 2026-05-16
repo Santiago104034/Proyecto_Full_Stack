@@ -1,132 +1,432 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>InterLink Estudiantil</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
-  <header class="topbar">
-    <div>
-      <h1>InterLink Estudiantil</h1>
-      <p>Conecta estudiantes con proyectos multidisciplinarios.</p>
-    </div>
-    <nav id="nav"></nav>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InterLink — Proyectos Estudiantiles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="toast" class="toast"></div>
 
-  <main class="container">
-    <section id="mensaje" class="mensaje oculto"></section>
-
-    <section id="authSection" class="grid two-cols">
-      <div class="card">
-        <h2>Iniciar sesión</h2>
-        <form id="loginForm">
-          <label>Correo</label>
-          <input type="email" id="loginCorreo" placeholder="victor@iteso.mx" required />
-          <label>Contraseña</label>
-          <input type="password" id="loginContrasena" placeholder="123456" required />
-          <button type="submit">Entrar</button>
-        </form>
+    <div id="authScreen" class="auth-screen">
+      <div class="auth-bg">
+        <div class="auth-orb auth-orb-1"></div>
+        <div class="auth-orb auth-orb-2"></div>
+        <div class="auth-orb auth-orb-3"></div>
       </div>
 
-      <div class="card">
-        <h2>Registro</h2>
-        <form id="registroForm">
-          <label>Nombre</label>
-          <input type="text" id="registroNombre" placeholder="Victor Ferrer" required />
-          <label>Correo institucional</label>
-          <input type="email" id="registroCorreo" placeholder="alumno@iteso.mx" required />
-          <label>Contraseña</label>
-          <input type="password" id="registroContrasena" placeholder="123456" required />
-          <label>Carrera</label>
-          <select id="registroCarrera" required>
-            <option value="">Cargando carreras...</option>
-          </select>
-          <button type="submit" class="outline">Registrarme</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="appSection" class="oculto">
-      <div class="card perfil-card">
-        <div>
-          <h2>Mi perfil</h2>
-          <p id="perfilTexto">Cargando perfil...</p>
-        </div>
-        <button id="logoutBtn" class="danger">Cerrar sesión</button>
-      </div>
-
-      <section class="grid two-cols">
-        <div class="card">
-          <h2>Crear proyecto</h2>
-          <form id="proyectoForm">
-            <label>Título</label>
-            <input type="text" id="proyectoTitulo" required placeholder="App para inventario" />
-            <label>Descripción</label>
-            <textarea id="proyectoDescripcion" rows="4" required placeholder="Describe el proyecto..."></textarea>
-            <label>Carreras requeridas</label>
-            <select id="proyectoCarreras" multiple required></select>
-            <small>Mantén Ctrl presionado para elegir varias carreras.</small>
-            <label>Cupo máximo</label>
-            <input type="number" id="proyectoCupo" min="1" value="3" required />
-            <button type="submit">Crear proyecto</button>
-          </form>
-        </div>
-
-        <div class="card">
-          <h2>Filtros y paginación</h2>
-          <label>Buscar</label>
-          <input type="text" id="filtroBuscar" placeholder="inventario, app, cafetería..." />
-          <label>Estado</label>
-          <select id="filtroEstado">
-            <option value="">Todos</option>
-            <option value="Activo">Activo</option>
-            <option value="En progreso">En progreso</option>
-            <option value="Finalizado">Finalizado</option>
-          </select>
-          <label>Carrera</label>
-          <select id="filtroCarrera">
-            <option value="">Todas</option>
-          </select>
-          <label>Elementos por página</label>
-          <input type="number" id="filtroLimit" value="5" min="1" />
-          <button id="filtrarBtn">Buscar proyectos</button>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="section-header">
-          <h2>Proyectos</h2>
+      <div class="auth-panel">
+        <div class="auth-brand">
+          <div class="brand-mark">IL</div>
           <div>
-            <button id="prevPage" class="small">Anterior</button>
-            <span id="pageInfo">Página 1</span>
-            <button id="nextPage" class="small">Siguiente</button>
+            <h1 class="brand-name">InterLink</h1>
+            <p class="brand-sub">Proyectos Estudiantiles</p>
           </div>
         </div>
-        <div id="proyectosLista" class="proyectos"></div>
-      </section>
 
-      <section class="grid two-cols">
-        <div class="card">
-          <h2>Mis postulaciones</h2>
-          <div id="misPostulaciones"></div>
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login">
+            Iniciar sesión
+          </button>
+          <button class="auth-tab" data-tab="registro">Crear cuenta</button>
         </div>
-        <div class="card">
-          <h2>Panel administrador</h2>
-          <button id="cargarAdminBtn">Cargar usuarios admin</button>
-          <div id="adminPanel"></div>
-          <small>Solo funciona si el usuario autenticado tiene rol administrador.</small>
+
+        <form id="loginForm" class="auth-form active" data-tab-content="login">
+          <div class="field-group">
+            <label>Correo institucional</label>
+            <input
+              type="email"
+              id="loginCorreo"
+              placeholder="usuario@iteso.mx"
+              required
+            />
+          </div>
+          <div class="field-group">
+            <label>Contraseña</label>
+            <input
+              type="password"
+              id="loginContrasena"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+          <button type="submit" class="btn-primary btn-full">
+            <span>Entrar</span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </form>
+
+        <form id="registroForm" class="auth-form" data-tab-content="registro">
+          <div class="field-group">
+            <label>Nombre completo</label>
+            <input
+              type="text"
+              id="registroNombre"
+              placeholder="Víctor Ferrer"
+              required
+            />
+          </div>
+          <div class="field-group">
+            <label>Correo institucional</label>
+            <input
+              type="email"
+              id="registroCorreo"
+              placeholder="alumno@iteso.mx"
+              required
+            />
+          </div>
+          <div class="field-group">
+            <label>Contraseña</label>
+            <input
+              type="password"
+              id="registroContrasena"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+          <div class="field-group">
+            <label>Carrera</label>
+            <select id="registroCarrera" required>
+              <option value="">Cargando carreras...</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-secondary btn-full">
+            <span>Crear cuenta</span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div id="appScreen" class="app-screen oculto">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+          <div class="brand-mark sm">IL</div>
+          <span class="brand-name sm">InterLink</span>
         </div>
-      </section>
-    </section>
-  </main>
 
-  <footer>
-    <p>Front-end conectado a Render: <span id="apiText"></span></p>
-  </footer>
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-view="proyectos">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="3" width="7" height="7" rx="1" />
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+              <rect x="14" y="14" width="7" height="7" rx="1" />
+            </svg>
+            <span>Proyectos</span>
+          </button>
+          <button class="nav-item" data-view="crear">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v8M8 12h8" />
+            </svg>
+            <span>Nuevo proyecto</span>
+          </button>
+          <button class="nav-item" data-view="postulaciones">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M9 12l2 2 4-4" />
+              <path
+                d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"
+              />
+            </svg>
+            <span>Mis postulaciones</span>
+          </button>
+          <button class="nav-item" data-view="admin">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>Administrador</span>
+          </button>
+        </nav>
 
-  <script src="app.js"></script>
-</body>
+        <div class="sidebar-footer">
+          <div class="perfil-mini">
+            <div class="avatar" id="avatarInitial">?</div>
+            <div class="perfil-info">
+              <span class="perfil-nombre" id="sidebarNombre">Cargando...</span>
+              <span class="perfil-rol" id="sidebarRol">alumno</span>
+            </div>
+          </div>
+          <button class="logout-btn" id="logoutBtn" title="Cerrar sesión">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar-app">
+          <button class="menu-toggle" id="menuToggle">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+          <div class="topbar-title" id="topbarTitle">Explorar proyectos</div>
+          <div class="topbar-right">
+            <div class="status-dot"></div>
+            <span class="status-text">Conectado</span>
+          </div>
+        </header>
+
+        <div class="view-container">
+          <section class="view active" id="view-proyectos">
+            <div class="filters-bar">
+              <div class="search-wrap">
+                <svg
+                  class="search-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>
+                <input
+                  type="text"
+                  id="filtroBuscar"
+                  placeholder="Buscar proyectos..."
+                  class="search-input"
+                />
+              </div>
+              <select id="filtroEstado" class="filter-select">
+                <option value="">Todos los estados</option>
+                <option value="Activo">Activo</option>
+                <option value="En progreso">En progreso</option>
+                <option value="Finalizado">Finalizado</option>
+              </select>
+              <select id="filtroCarrera" class="filter-select">
+                <option value="">Todas las carreras</option>
+              </select>
+              <select id="filtroLimit" class="filter-select narrow">
+                <option value="5">5 / pág.</option>
+                <option value="10">10 / pág.</option>
+                <option value="20">20 / pág.</option>
+              </select>
+              <button id="filtrarBtn" class="btn-primary compact">
+                Filtrar
+              </button>
+            </div>
+            <div id="proyectosLista" class="proyectos-grid"></div>
+            <div class="pagination">
+              <button id="prevPage" class="btn-ghost">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  width="16"
+                  height="16"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+                Anterior
+              </button>
+              <span id="pageInfo" class="page-info">Página 1 de 1</span>
+              <button id="nextPage" class="btn-ghost">
+                Siguiente
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  width="16"
+                  height="16"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </section>
+
+          <section class="view" id="view-crear">
+            <div class="form-card-wrapper">
+              <div class="form-card">
+                <div class="form-card-header">
+                  <h2>Nuevo proyecto</h2>
+                  <p>
+                    Comparte tu idea y encuentra colaboradores
+                    multidisciplinarios
+                  </p>
+                </div>
+                <form id="proyectoForm">
+                  <div class="field-group">
+                    <label>Título del proyecto</label>
+                    <input
+                      type="text"
+                      id="proyectoTitulo"
+                      required
+                      placeholder="Ej. App para inventario de cafetería"
+                    />
+                  </div>
+                  <div class="field-group">
+                    <label>Descripción</label>
+                    <textarea
+                      id="proyectoDescripcion"
+                      rows="5"
+                      required
+                      placeholder="Describe el objetivo, la problemática que resuelve..."
+                    ></textarea>
+                  </div>
+                  <div class="field-row">
+                    <div class="field-group">
+                      <label>Carreras requeridas</label>
+                      <div class="multiselect-hint">
+                        Mantén Ctrl para seleccionar varias
+                      </div>
+                      <select
+                        id="proyectoCarreras"
+                        multiple
+                        required
+                        class="multiselect"
+                      ></select>
+                    </div>
+                    <div class="field-group narrow">
+                      <label>Cupo máximo</label>
+                      <input
+                        type="number"
+                        id="proyectoCupo"
+                        min="1"
+                        value="3"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <button type="submit" class="btn-primary">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      width="18"
+                      height="18"
+                    >
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Publicar proyecto
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" id="view-postulaciones">
+            <div class="section-heading">
+              <h2>Mis postulaciones</h2>
+              <p>Seguimiento de los proyectos a los que te has postulado</p>
+            </div>
+            <div id="misPostulaciones" class="postulaciones-lista"></div>
+          </section>
+
+          <section class="view" id="view-admin">
+            <div class="section-heading">
+              <h2>Panel de administrador</h2>
+              <p>
+                Solo disponible para usuarios con rol
+                <strong>administrador</strong>
+              </p>
+            </div>
+            <button id="cargarAdminBtn" class="btn-primary">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                width="18"
+                height="18"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              Cargar usuarios
+            </button>
+            <div id="adminPanel" class="admin-panel"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div id="modalOverlay" class="modal-overlay oculto">
+      <div class="modal" id="modalContent">
+        <button class="modal-close" id="modalCloseBtn">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="20"
+            height="20"
+          >
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>
