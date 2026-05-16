@@ -3,12 +3,16 @@ const Usuario = require('../models/Usuario');
 
 async function requireAuth(req, res, next) {
   try {
-    const header = req.headers.authorization;
-    if (!header || !header.startsWith('Bearer ')) {
-      return res.status(401).json({ success: false, message: 'Token no enviado' });
+    let token = req.cookies.token;
+
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
     }
 
-    const token = header.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ success: false, message: 'Token no encontrado en cookies' });
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const usuario = await Usuario.findById(decoded.id).select('-contrasena');
 

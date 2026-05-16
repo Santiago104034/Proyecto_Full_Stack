@@ -1,3 +1,4 @@
+#Aquí ya se aplico la corrección profe, agregamos los tags para cada uno de los metodos para que la pagina de Swagger UI se vea mas organizada y .
 openapi: 3.0.0
 info:
   title: InterLink Estudiantil API
@@ -14,6 +15,8 @@ components:
 paths:
   /api/auth/register:
     post:
+      tags:
+        - Autenticación
       summary: Registro de usuario
       requestBody:
         required: true
@@ -25,10 +28,12 @@ paths:
               contrasena: "123456"
               carrera: "ID_DE_CARRERA"
       responses:
-        '201': { description: Usuario registrado }
-        '400': { description: Datos inválidos }
+        "201": { description: Usuario registrado }
+        "400": { description: Datos inválidos }
   /api/auth/login:
     post:
+      tags:
+        - Autenticación
       summary: Inicio de sesión
       requestBody:
         required: true
@@ -38,31 +43,39 @@ paths:
               correo: victor@universidad.mx
               contrasena: "123456"
       responses:
-        '200': { description: Login correcto y token JWT }
-        '401': { description: Credenciales incorrectas }
+        "200": { description: Login correcto y token JWT }
+        "401": { description: Credenciales incorrectas }
   /api/carreras:
     get:
+      tags:
+        - Carreras
       summary: Listar carreras
       security:
         - bearerAuth: []
       responses:
-        '200': { description: Lista de carreras }
+        "200": { description: Lista de carreras }
   /api/usuarios/perfil:
     get:
+      tags:
+        - Usuarios
       summary: Obtener perfil del usuario autenticado
       security:
         - bearerAuth: []
       responses:
-        '200': { description: Perfil del usuario }
+        "200": { description: Perfil del usuario }
   /api/usuarios/mis-postulaciones:
     get:
+      tags:
+        - Usuarios
       summary: Ver mis postulaciones
       security:
         - bearerAuth: []
       responses:
-        '200': { description: Lista de postulaciones del usuario }
+        "200": { description: Lista de postulaciones del usuario }
   /api/proyectos:
     get:
+      tags:
+        - Proyectos
       summary: Listar proyectos con filtros y paginación
       security:
         - bearerAuth: []
@@ -83,8 +96,10 @@ paths:
           name: buscar
           schema: { type: string }
       responses:
-        '200': { description: Lista paginada de proyectos }
+        "200": { description: Lista paginada de proyectos }
     post:
+      tags:
+        - Proyectos
       summary: Crear proyecto
       security:
         - bearerAuth: []
@@ -98,9 +113,11 @@ paths:
               carreras: ["ID_CARRERA_1", "ID_CARRERA_2"]
               cupoMaximo: 3
       responses:
-        '201': { description: Proyecto creado }
+        "201": { description: Proyecto creado }
   /api/proyectos/{id}:
     get:
+      tags:
+        - Proyectos
       summary: Obtener detalle de proyecto
       security:
         - bearerAuth: []
@@ -110,9 +127,11 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        '200': { description: Proyecto encontrado }
-        '404': { description: Proyecto no encontrado }
+        "200": { description: Proyecto encontrado }
+        "404": { description: Proyecto no encontrado }
     put:
+      tags:
+        - Proyectos
       summary: Editar proyecto, solo creador
       security:
         - bearerAuth: []
@@ -122,8 +141,10 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        '200': { description: Proyecto actualizado }
+        "200": { description: Proyecto actualizado }
     delete:
+      tags:
+        - Proyectos
       summary: Eliminar proyecto, solo creador
       security:
         - bearerAuth: []
@@ -133,9 +154,11 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        '200': { description: Proyecto eliminado }
+        "200": { description: Proyecto eliminado }
   /api/proyectos/{id}/postulaciones:
     post:
+      tags:
+        - Postulaciones
       summary: Postularme a un proyecto
       security:
         - bearerAuth: []
@@ -145,8 +168,10 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        '201': { description: Postulación creada }
+        "201": { description: Postulación creada }
     get:
+      tags:
+        - Postulaciones
       summary: Ver postulaciones recibidas, solo creador
       security:
         - bearerAuth: []
@@ -156,9 +181,11 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        '200': { description: Lista de postulaciones }
+        "200": { description: Lista de postulaciones }
   /api/proyectos/{id}/postulaciones/{postulacionId}:
     patch:
+      tags:
+        - Postulaciones
       summary: Aceptar o rechazar postulación, solo creador
       security:
         - bearerAuth: []
@@ -178,10 +205,12 @@ paths:
             example:
               estado: Aceptada
       responses:
-        '200': { description: Estado actualizado }
-        '409': { description: Proyecto lleno }
+        "200": { description: Estado actualizado }
+        "409": { description: Proyecto lleno }
   /api/proyectos/{id}/mensajes:
     get:
+      tags:
+        - Mensajería
       summary: Ver mensajes del proyecto, solo creador o alumno aceptado
       security:
         - bearerAuth: []
@@ -191,8 +220,10 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        '200': { description: Lista de mensajes }
+        "200": { description: Lista de mensajes }
     post:
+      tags:
+        - Mensajería
       summary: Enviar mensaje al chat del proyecto
       security:
         - bearerAuth: []
@@ -208,16 +239,20 @@ paths:
             example:
               contenido: Hola, me interesa colaborar en el proyecto.
       responses:
-        '201': { description: Mensaje enviado }
+        "201": { description: Mensaje enviado }
   /api/admin/usuarios:
     get:
+      tags:
+        - Administración
       summary: Listar usuarios, solo administrador
       security:
         - bearerAuth: []
       responses:
-        '200': { description: Lista de usuarios }
+        "200": { description: Lista de usuarios }
   /api/admin/proyectos/{id}:
     delete:
+      tags:
+        - Administración
       summary: Eliminar cualquier proyecto, solo administrador
       security:
         - bearerAuth: []
@@ -227,16 +262,20 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        '200': { description: Proyecto eliminado }
+        "200": { description: Proyecto eliminado }
   /api/admin/mensajes:
     get:
+      tags:
+        - Administración
       summary: Listar mensajes, solo administrador
       security:
         - bearerAuth: []
       responses:
-        '200': { description: Lista de mensajes }
+        "200": { description: Lista de mensajes }
   /api/admin/mensajes/{id}:
     delete:
+      tags:
+        - Administración
       summary: Eliminar mensaje, solo administrador
       security:
         - bearerAuth: []
@@ -246,4 +285,4 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        '200': { description: Mensaje eliminado }
+        "200": { description: Mensaje eliminado }
