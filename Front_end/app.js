@@ -1,5 +1,5 @@
-const API_URL = 'https://backend-desarrollo-web-pntm.onrender.com';
-axios.defaults.withCredentials = false;
+const API_URL = 'https://proyecto-final-interlink.onrender.com';
+axios.defaults.withCredentials = true;
 
 let carreras = [];
 let paginaActual = 1;
